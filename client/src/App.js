@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import { Route } from 'react-router-dom'
 
 import SavedList from './Movies/SavedList'
@@ -7,7 +8,15 @@ import Movie from './Movies/Movie'
 import UpdateForm from './Movies/UpdateForm'
 
 const App = () => {
+  const [movies, setMovies] = useState([])
   const [savedList, setSavedList] = useState([])
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:5000/api/movies')
+      .then(response => setMovies(response.data))
+      .catch(err => console.log(err.response))
+  }, [])
 
   const addToSavedList = movie => {
     setSavedList([...savedList, movie])
