@@ -1,21 +1,22 @@
-import React from "react";
-import axios from "axios";
-import MovieCard from "./MovieCard";
+import React from 'react'
+import axios from 'axios'
+import MovieCard from './MovieCard'
+
 export default class Movie extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       movie: null
-    };
+    }
   }
 
   componentDidMount() {
-    this.fetchMovie(this.props.match.params.id);
+    this.fetchMovie(this.props.match.params.id)
   }
 
   componentWillReceiveProps(newProps) {
     if (this.props.match.params.id !== newProps.match.params.id) {
-      this.fetchMovie(newProps.match.params.id);
+      this.fetchMovie(newProps.match.params.id)
     }
   }
 
@@ -23,17 +24,17 @@ export default class Movie extends React.Component {
     axios
       .get(`http://localhost:5000/api/movies/${id}`)
       .then(res => this.setState({ movie: res.data }))
-      .catch(err => console.log(err.response));
-  };
+      .catch(err => console.log(err.response))
+  }
 
   saveMovie = () => {
-    const addToSavedList = this.props.addToSavedList;
-    addToSavedList(this.state.movie);
-  };
+    const addToSavedList = this.props.addToSavedList
+    addToSavedList(this.state.movie)
+  }
 
   render() {
     if (!this.state.movie) {
-      return <div>Loading movie information...</div>;
+      return <div>Loading movie information...</div>
     }
 
     return (
@@ -43,6 +44,6 @@ export default class Movie extends React.Component {
           Save
         </div>
       </div>
-    );
+    )
   }
 }
